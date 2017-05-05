@@ -53,13 +53,23 @@ void bindTexture(int tex_ID) {
     glBindTexture( GL_TEXTURE_2D, tex_ID );
 }
 
+float scale = 0.7;
+float inc = 0.0001;
+
 void display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     counter += 0.05;
+    scale += inc;
 
     if(counter > 180) {
         counter = -180;
+    }
+    if(scale > 1) {
+        inc = -0.0001;
+    }
+    else if(scale < 0.5) {
+        inc = 0.0001;
     }
 
     // kubus
@@ -68,7 +78,9 @@ void display() {
     glColor4f( 1.0f, 1.0f, 1.0f, 1.0f );
     //glNormal3f( 0.0f, 0.0f, 1.0f );
 
+    glScalef(scale, scale, scale);
     glRotatef(counter, 0.9, 1, 0.7);
+
     // White side - BACK
     bindTexture(2);
 
